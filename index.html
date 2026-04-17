@@ -807,36 +807,7 @@ window.refreshFromSheets = async (isInitialLoad = false) => {
   }
 };
 
-    // Replace motors array contents
-    motors.length = 0;
-    allMotors.forEach(m => motors.push(m));
-
-    // Re-render everything
-    renderList();
-    updateAlertBadge();
-    selectedIdx = null;
-    document.getElementById('mainArea').innerHTML = `<div class="empty"><div class="empty-icon">⚡</div><div>Data refreshed — select a motor to view trend</div></div>`;
-
-    const now = new Date();
-    const timeStr = now.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}) + ' ' + now.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
-    status.textContent = `✓ Updated ${timeStr}`;
-    btn.textContent = '🔄 Refresh Data';
-    btn.classList.remove('loading');
-
-  } catch(err) {
-    status.textContent = `✗ Error`;
-    btn.textContent = '🔄 Refresh Data';
-    btn.classList.remove('loading');
-    let errBox = document.getElementById('refreshErrBox');
-    if (!errBox) {
-      errBox = document.createElement('div');
-      errBox.id = 'refreshErrBox';
-      errBox.style.cssText = 'position:fixed;top:60px;left:50%;transform:translateX(-50%);background:#2d0a0a;border:1px solid #e84040;color:#ff8080;padding:14px 20px;border-radius:8px;font-size:12px;z-index:9999;max-width:500px;width:90%;box-shadow:0 4px 20px rgba(0,0,0,0.5)';
-      document.body.appendChild(errBox);
-    }
-    errBox.innerHTML = `<div style="font-weight:700;margin-bottom:6px;color:#ff4444">⚠ Refresh Failed</div><div style="margin-bottom:8px">${err.message}</div><div style="font-size:10px;color:#ff8080;opacity:0.7">Type: ${err.name} — check if sheet is publicly accessible</div><div style="margin-top:10px;text-align:right"><button onclick="document.getElementById('refreshErrBox').remove()" style="background:#e84040;border:none;color:#fff;padding:4px 12px;border-radius:4px;cursor:pointer;font-size:11px">Close</button></div>`;
-  }
-};
+    
 
 window.toggleExportMenu = () => {
   document.getElementById('exportDropdown').classList.toggle('open');
