@@ -54,7 +54,8 @@ select:focus,input:focus{border-color:#3a7bd5}
 .motor-item{padding:7px 11px;border-bottom:1px solid #f0f0f0;cursor:pointer;transition:background 0.1s}
 .motor-item:hover{background:#f5f8ff}
 .motor-item.active{background:#ebf2ff;border-left:3px solid #3a7bd5}
-.motor-item:not(.active){border-left:3px solid transparent}
+.motor-item.compare{background:#fff3e8;border-left:3px solid #e07020}
+.motor-item:not(.active):not(.compare){border-left:3px solid transparent}
 .m-tag{font-size:12px;font-weight:700;color:#1a2a4a}
 .m-desc{font-size:11px;color:#555;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .m-meta{font-size:10px;color:#999;margin-top:1px}
@@ -899,9 +900,28 @@ function renderList(){
   document.getElementById('motorCount').textContent=vis.length+' motor'+(vis.length!==1?'s':'')+' shown';
   const list=document.getElementById('motorList');list.innerHTML='';
   vis.forEach(({m,i})=>{
-    const div=document.createElement('div');div.className='motor-item'+(i===selectedIdx?' active':'');
+    const div=document.createElement('div');
+    const isCompare=compareMotor&&compareMotor.tag===m.tag&&compareMotor.source===m.source;
+    div.className='motor-item'+(i===selectedIdx?' active':isCompare?' compare':'');
     div.innerHTML='<div class="m-tag"><span class="m-src '+sc(m.source)+'">'+ss(m.source)+'</span>'+m.tag+'</div><div class="m-desc" title="'+m.description+'">'+m.description+'</div><div class="m-meta">'+m.mcc+' · '+Object.keys(m.readings).length+' days</div>';
-    div.onclick=()=>{selectedIdx=i;renderList();showMotor(m);};
+    div.onclick=()=>{
+      if(window._comparePicking){
+        // Compare pick mode — set this as the compare motor
+        window._comparePicking = false;
+        const mc = document.getElementById('motorCount');
+        mc.style.color=''; mc.style.fontWeight='';
+        compareMotor = m; compareIdx = i;
+        renderList();
+        if(selectedIdx !== null) showMotor(motors[selectedIdx]);
+      } else {
+        selectedIdx=i; renderList();
+        // Auto-close sidebar on mobile after selection
+        const sb=document.querySelector('.sidebar');
+        const ov=document.getElementById('sidebarOverlay');
+        if(sb&&sb.classList.contains('open')){ sb.classList.remove('open'); ov.classList.remove('open'); }
+        showMotor(m);
+      }
+    };
     list.appendChild(div);
   });
 }
