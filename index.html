@@ -1196,17 +1196,20 @@ function renderAlertPage(){
         `<span style="font-size:10px;color:#aaa">${rows.length} motors</span>`+
         `<div class="gp">`+
         (ocInGroup.length>0?`<span class="gb gb-w">⚠ ${ocInGroup.length} OC</span>`:'')+
-        (showOK?`<span class="gb gb-ok">✓ ${rows.length-ocInGroup.length} OK</span>`:'')+
-        `<span class="gt">${ocInGroup.length>0?'▾':'▸'}</span></div>`;
+        (showOK?`<span class="gb gb-ok">✓ ${rows.filter(r=>r.stats.breachesInWindow.length===0&&r.m.rated_current).length} OK</span>`:'')+
+        (showOK&&unrated.length?`<span class="gb" style="background:#f0f0f0;color:#888">— ${rows.filter(r=>!r.m.rated_current).length} unrated</span>`:'')+
+        `<span class="gt">${(ocInGroup.length>0||showOK)?'▾':'▸'}</span></div>`;
 
       const ml = document.createElement('div');
-      ml.className = 'aml'+(ocInGroup.length>0?' open':'');
+      // Auto-open: always open if group has OC motors, also open if showOK is checked
+      ml.className = 'aml'+((ocInGroup.length>0 || showOK)?' open':'');
 
-      // OC motors first, then OK if shown
-      const ocSorted = sortRows(ocInGroup);
-      const okRows   = showOK ? rows.filter(r=>r.stats.breachesInWindow.length===0 && r.m.rated_current) : [];
+      // OC motors first (sorted), then OK motors, then unrated — all shown when showOK
+      const ocSorted  = sortRows(ocInGroup);
+      const okRows    = showOK ? rows.filter(r=>r.stats.breachesInWindow.length===0 && r.m.rated_current) : [];
+      const unratedRows = showOK ? rows.filter(r=>!r.m.rated_current) : [];
 
-      [...ocSorted, ...okRows].forEach(({m, i, stats})=>{
+      [...ocSorted, ...okRows, ...unratedRows].forEach(({m, i, stats})=>{
         const {breachesInWindow, latestAvg, latestDate, severityPct, streak, trendDir, totalDays} = stats;
         const rated = m.rated_current;
         const thr   = rated ? rated*mult : null;
@@ -1300,42 +1303,91 @@ function updateAlertBadge(){
 
 // ── Copy Summary ──────────────────────────────────────
 window.copySummary = function(){
-  const mult = alertOCMult;
+  const mult    = alertOCMult;
+  const showOK  = document.getElementById('showOKchk')?.checked || false;
   const rangeLabel = {'all':'All time','1w':'Last 7 days','1m':'Last 30 days','3m':'Last 3 months','6m':'Last 6 months','custom':'Custom range'}[alertRange]||alertRange;
   const now = new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+
+  const titleMode = showOK ? 'Full Motor Status Report' : 'OC Alert Summary';
   const lines = [
-    `OC Alert Summary — ${now} — ${rangeLabel} — ×${mult} threshold`,
-    '='.repeat(55),
+    `${titleMode} — ${now} — ${rangeLabel} — ×${mult} threshold`,
+    '='.repeat(60),
   ];
 
   const grouped = {};
   [...new Set(motors.map(m=>m.group))].sort().forEach(g=>grouped[g]=[]);
   motors.forEach(m=>{ if(grouped[m.group]) grouped[m.group].push(m); });
 
+  let totalOC=0, totalOK=0, totalUnrated=0;
+
   Object.entries(grouped).forEach(([gn, grpMotors])=>{
-    const grpResults = grpMotors.map(m=>({ m, stats: motorAlertStats(m, mult) }))
-      .filter(r=>r.stats.breachesInWindow.length>0)
-      .sort((a,b)=>b.stats.severityPct-a.stats.severityPct);
-    if(!grpResults.length) return;
+    // Compute stats for all motors in group
+    const grpResults = grpMotors
+      .map(m=>({ m, stats: motorAlertStats(m, mult) }))
+      .sort((a,b)=>b.stats.severityPct - a.stats.severityPct);
+
+    const ocList      = grpResults.filter(r=>r.stats.breachesInWindow.length>0);
+    const okList      = grpResults.filter(r=>r.stats.breachesInWindow.length===0 && r.m.rated_current);
+    const unratedList = grpResults.filter(r=>!r.m.rated_current);
+
+    // Skip group entirely if no OC and showOK is off
+    if(ocList.length===0 && !showOK) return;
+
+    totalOC      += ocList.length;
+    totalOK      += okList.length;
+    totalUnrated += unratedList.length;
+
     lines.push('');
-    lines.push(`${gn} (${grpResults.length} motor${grpResults.length>1?'s':''} in OC)`);
-    lines.push('-'.repeat(40));
-    grpResults.forEach(({m, stats})=>{
-      const rated = m.rated_current;
-      const thr   = rated ? (rated*mult).toFixed(1) : '—';
-      const latest= stats.latestAvg ? stats.latestAvg.toFixed(1)+'A' : '—';
-      const streak= stats.streak > 1 ? ` | ${stats.streak}-day streak` : '';
-      const trend = stats.trendDir==='worsening'?' ⬆ worsening':stats.trendDir==='improving'?' ⬇ improving':' → stable';
+    const grpSummary = showOK
+      ? `${gn} — ⚠ ${ocList.length} OC  ✓ ${okList.length} OK  — ${unratedList.length} unrated`
+      : `${gn} (${ocList.length} motor${ocList.length!==1?'s':''} in OC)`;
+    lines.push(grpSummary);
+    lines.push('-'.repeat(50));
+
+    // OC motors
+    ocList.forEach(({m, stats})=>{
+      const rated  = m.rated_current;
+      const thr    = rated ? (rated*mult).toFixed(1) : '—';
+      const latest = stats.latestAvg ? stats.latestAvg.toFixed(1)+'A' : '—';
+      const streak = stats.streak > 1 ? ` | ${stats.streak}-day streak` : '';
+      const trend  = stats.trendDir==='worsening'?' ⬆ worsening':stats.trendDir==='improving'?' ⬇ improving':' → stable';
+      const pct    = (stats.severityPct > -Infinity && stats.severityPct > 0) ? ` (+${stats.severityPct.toFixed(1)}% over limit)` : '';
       lines.push(
-        `  ${m.tag.padEnd(14)} ${String(stats.breachesInWindow.length).padStart(3)} events`+
+        `  ⚠ ${m.tag.padEnd(14)} ${String(stats.breachesInWindow.length).padStart(3)} events`+
         ` | Latest ${latest.padStart(8)}`+
-        ` | OC limit ${thr}A`+
-        `${streak}${trend}`
+        ` | OC limit ${thr}A${pct}${streak}${trend}`
       );
     });
+
+    // OK and unrated motors (only when showOK is checked)
+    if(showOK){
+      okList.forEach(({m, stats})=>{
+        const rated  = m.rated_current;
+        const latest = stats.latestAvg ? stats.latestAvg.toFixed(1)+'A' : '—';
+        const trend  = stats.trendDir==='worsening'?' ⬆ worsening':stats.trendDir==='improving'?' ⬇ improving':' → stable';
+        lines.push(
+          `  ✓ ${m.tag.padEnd(14)}   OK           `+
+          ` | Latest ${latest.padStart(8)}`+
+          ` | Rated  ${rated?rated+'A':'—    '}${trend}`
+        );
+      });
+      unratedList.forEach(({m})=>{
+        lines.push(
+          `  — ${m.tag.padEnd(14)}   Unrated      `+
+          ` | ${m.description.substring(0,35)}`
+        );
+      });
+    }
   });
 
+  // Footer totals
   lines.push('');
+  lines.push('='.repeat(60));
+  if(showOK){
+    lines.push(`TOTAL: ⚠ ${totalOC} OC  ✓ ${totalOK} OK  — ${totalUnrated} unrated  (${motors.length} motors total)`);
+  } else {
+    lines.push(`TOTAL OC motors: ${totalOC} of ${motors.length}`);
+  }
   lines.push(`Generated by MCC Motor Current Trends — SamiUddin Ahmed Zia · E&I Dept · Ismail Resin`);
 
   navigator.clipboard.writeText(lines.join('\n')).then(()=>{
