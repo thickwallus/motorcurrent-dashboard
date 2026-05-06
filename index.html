@@ -136,74 +136,92 @@ select:focus,input:focus{border-color:#3a7bd5}
 }
 .empty{display:flex;align-items:center;justify-content:center;flex:1;color:#bbb;font-size:13px;flex-direction:column;gap:8px;text-align:center;padding:20px}
 .empty-icon{font-size:32px;opacity:0.22}
-/* ── OC Alert Tab ── */
-.alert-top{padding:8px 14px;background:#fff;border-bottom:1px solid #e0e0e0;display:flex;flex-direction:column;gap:6px}
+/* ── OC Alert Tab toolbar ── */
+.alert-top{padding:8px 14px;background:#fff;border-bottom:1px solid #e8eaf0;display:flex;flex-direction:column;gap:5px}
 .alert-toolbar{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-.alert-toolbar2{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding-top:2px;border-top:1px solid #f0f0f0}
-.spills{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-left:auto}
-.pill{padding:3px 10px;border-radius:14px;font-size:11px;font-weight:600;border:1px solid}
-.p-r{background:#ffe8e8;color:#c0392b;border-color:#f5c0c0}
+.alert-toolbar2{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding-top:4px;border-top:1px solid #f2f3f7}
+.spills{display:flex;gap:5px;flex-wrap:wrap;align-items:center;margin-left:auto}
+.pill{padding:2px 10px;border-radius:12px;font-size:10px;font-weight:600;border:1px solid;white-space:nowrap}
+.p-r{background:#fff0f0;color:#c0392b;border-color:#fac8c8}
 .p-g{background:#e8f8ee;color:#1e8449;border-color:#a9dfbf}
-.p-gr{background:#f0f0f0;color:#666;border-color:#ddd}
-.p-or{background:#fff3e0;color:#e65100;border-color:#ffcc80}
-.alert-body{flex:1;overflow-y:auto;padding:10px 14px;display:flex;flex-direction:column;gap:8px}
-/* group card */
-.ag{background:#fff;border-radius:8px;border:1px solid #e4e4e4;overflow:hidden}
-.agh{padding:8px 13px;background:#f4f6fb;border-bottom:1px solid #e8eaf0;display:flex;align-items:center;gap:7px;cursor:pointer;user-select:none}
-.agh:hover{background:#edf1fb}
-.gn{font-size:12px;font-weight:700;color:#1a2a4a}
+.p-gr{background:#f4f4f4;color:#777;border-color:#e0e0e0}
+.p-or{background:#fff8ee;color:#b05800;border-color:#f5cc80}
+/* ── Group card ── */
+.ag{background:#fff;border-radius:10px;border:1px solid #e8eaf0;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+.agh{padding:9px 14px;background:#f7f8fc;border-bottom:1px solid #eceef5;display:flex;align-items:center;gap:7px;cursor:pointer;user-select:none;transition:background 0.12s}
+.agh:hover{background:#eef0f9}
+.gn{font-size:12px;font-weight:600;color:#1a2a4a}
 .gp{display:flex;gap:5px;margin-left:auto;align-items:center}
-.gb{font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px}
-.gb-w{background:#ffe0e0;color:#c0392b}.gb-ok{background:#e8f8ee;color:#1e8449}
-.gt{font-size:11px;color:#888;margin-left:3px}
+.gb{font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px}
+.gb-w{background:#fff0f0;color:#c0392b;border:1px solid #fac8c8}
+.gb-ok{background:#e8f8ee;color:#1e8449;border:1px solid #a9dfbf}
+.gt{font-size:11px;color:#aaa;margin-left:2px}
 .aml{display:none}.aml.open{display:block}
-/* motor alert row */
-.ar{padding:9px 13px;border-bottom:1px solid #f5f5f5;display:flex;gap:10px;align-items:stretch;transition:background 0.1s}
+/* ── OC motor row ── */
+.ar{display:flex;align-items:stretch;border-bottom:1px solid #f5f6fa;transition:background 0.1s;background:#fff}
 .ar:last-child{border-bottom:none}
-.ar:hover{background:#fff8f0}
-.ar.no-oc:hover{background:#f7fffb}
-.arl{min-width:0;flex:1}
-.art{font-size:12px;font-weight:700;color:#1a2a4a;display:flex;align-items:center;gap:5px;flex-wrap:wrap}
-.ard{font-size:11px;color:#555;margin-top:1px}
-.arm{font-size:10px;color:#bbb;margin-top:2px}
-/* latest reading bar */
-.ar-reading{margin-top:5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.ar-reading-val{font-size:13px;font-weight:700}
+.ar:hover{background:#fffcf8}
+.ar.no-oc{background:#fafffe}
+.ar.no-oc:hover{background:#f0fff8}
+/* Left accent strip */
+.ar-accent{width:3px;flex-shrink:0;align-self:stretch;border-radius:0}
+.ar-accent-oc{background:linear-gradient(180deg,#e84040,#c0392b)}
+.ar-accent-ok{background:linear-gradient(180deg,#27ae60,#1e8449)}
+.ar-accent-none{background:#ddd}
+/* Main content area */
+.arl{flex:1;padding:10px 14px 10px 12px;min-width:0;display:flex;flex-direction:column;gap:4px}
+/* Tag line */
+.art{font-size:12px;font-weight:500;color:#1a2a4a;display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.art strong{font-weight:600}
+/* Trend arrow pills — match preview soft style */
+.trend-arrow{font-size:10px;font-weight:500;padding:1px 7px;border-radius:10px;white-space:nowrap}
+.tr-up{color:#c0392b;background:#fff0f0;border:1px solid #fac8c8}
+.tr-dn{color:#1e8449;background:#e8f8ee;border:1px solid #a9dfbf}
+.tr-st{color:#666;background:#f4f4f4;border:1px solid #e0e0e0}
+/* Streak badge — soft pill */
+.streak-badge{display:inline-flex;align-items:center;gap:3px;padding:1px 7px;border-radius:10px;font-size:10px;font-weight:500;white-space:nowrap}
+.streak-hot{background:#fff0f0;color:#c0392b;border:1px solid #fac8c8}
+.streak-warm{background:#fff8ee;color:#b05800;border:1px solid #f5cc80}
+/* Description + meta */
+.ard{font-size:11px;color:#666;font-weight:400}
+.arm{font-size:10px;color:#bbb;font-weight:400}
+/* Reading bar row */
+.ar-reading{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:1px}
+.ar-reading-val{font-size:13px;font-weight:600}
 .ar-reading-val.over{color:#e84040}
 .ar-reading-val.ok{color:#27ae60}
-.ar-reading-meta{font-size:10px;color:#888}
-.ar-bar-wrap{flex:1;min-width:80px;max-width:200px;height:5px;background:#eee;border-radius:3px;overflow:hidden}
-.ar-bar{height:100%;border-radius:3px;transition:width 0.3s}
+.ar-reading-meta{font-size:10px;color:#999}
+.ar-bar-wrap{flex:1;min-width:80px;max-width:180px;height:4px;background:#eeeff4;border-radius:2px;overflow:hidden}
+.ar-bar{height:100%;border-radius:2px;transition:width 0.4s ease}
 .ar-bar.over{background:linear-gradient(90deg,#f39c12,#e84040)}
-.ar-bar.ok{background:#27ae60}
-/* streak badge */
-.streak-badge{display:inline-flex;align-items:center;gap:3px;padding:1px 7px;border-radius:8px;font-size:10px;font-weight:700;white-space:nowrap}
-.streak-hot{background:#fff0f0;color:#c0392b;border:1px solid #fac8c8}
-.streak-warm{background:#fff8e8;color:#b05800;border:1px solid #f5cc80}
-.streak-ok{background:#e8f8ee;color:#1e8449;border:1px solid #a9dfbf}
-/* trend direction arrow */
-.trend-arrow{font-size:11px;font-weight:700;padding:1px 5px;border-radius:4px}
-.tr-up{color:#e84040;background:#fff0f0}
-.tr-dn{color:#27ae60;background:#e8f8ee}
-.tr-st{color:#888;background:#f0f0f0}
-/* breach chips */
-.bw{margin-top:5px;display:flex;flex-wrap:wrap;gap:3px}
-.bc{font-size:10px;background:#fff0f0;color:#c0392b;border:1px solid #fac8c8;padding:1px 5px;border-radius:3px;white-space:nowrap}
-.bc-old{background:#f9f9f9;color:#aaa;border-color:#e0e0e0}
-/* right column */
-.arr{text-align:right;min-width:70px;flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:3px}
-.ocn{font-size:22px;font-weight:800;color:#e84040;line-height:1}
-.ocn.zero{color:#27ae60;font-size:14px;font-weight:600}
-.ocl{font-size:9px;color:#bbb}
-.sev-pct{font-size:10px;font-weight:700;color:#e84040}
+.ar-bar.ok{background:linear-gradient(90deg,#2ecc71,#27ae60)}
+/* Summary line */
+.ar-summary{font-size:11px;color:#666;line-height:1.5;font-weight:400}
+.ar-summary strong{color:#1a2a4a;font-weight:600}
+/* Collapsible dates toggle */
+.ar-dates-toggle{display:inline-flex;align-items:center;gap:3px;font-size:10px;color:#3a7bd5;cursor:pointer;text-decoration:none;background:none;border:none;padding:1px 0;margin-top:1px;font-weight:500;opacity:0.8}
+.ar-dates-toggle:hover{opacity:1;text-decoration:underline;text-underline-offset:2px}
+/* Collapsible dates body — FIXED: display:none only, open class adds flex */
+.ar-dates-body{display:none;margin-top:6px;flex-wrap:wrap;gap:3px}
+.ar-dates-body.open{display:flex}
+/* Date chips */
+.bc{font-size:10px;background:#fff5f5;color:#c0392b;border:1px solid #fadadd;padding:2px 7px;border-radius:6px;white-space:nowrap;font-weight:400}
+.bc:hover{background:#ffe0e0}
+/* Right column — fixed, always visible */
+.arr{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:12px 16px;border-left:1px solid #f0f2f8;min-width:90px;flex-shrink:0;text-align:center;background:#fafbfe}
+.ocn{font-size:24px;font-weight:700;color:#e84040;line-height:1;letter-spacing:-0.5px}
+.ocn.zero{color:#27ae60;font-size:14px;font-weight:600;letter-spacing:0}
+.ocl{font-size:9px;color:#bbb;font-weight:400;text-transform:uppercase;letter-spacing:0.3px}
+.sev-pct{font-size:10px;font-weight:600;color:#e84040}
 .sev-pct.ok{color:#27ae60}
-/* view trend btn */
-.vtb{margin-top:4px;font-size:10px;color:#fff;background:#3a7bd5;border:none;padding:2px 9px;border-radius:3px;cursor:pointer;font-weight:600;display:inline-block}
+/* View trend button — pill style like preview */
+.vtb{font-size:10px;color:#fff;background:#3a7bd5;border:none;padding:4px 12px;border-radius:12px;cursor:pointer;font-weight:500;white-space:nowrap;transition:background 0.12s;letter-spacing:0.1px}
 .vtb:hover{background:#2d63b5}
-/* copy summary btn */
-.copy-btn{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:5px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid rgba(91,156,246,0.4);background:rgba(91,156,246,0.1);color:#7fb3f5;transition:all 0.15s}
-.copy-btn:hover{background:rgba(91,156,246,0.25);color:#fff}
-.copy-btn.copied{background:rgba(39,174,96,0.2);border-color:rgba(39,174,96,0.4);color:#7dcea0}
+/* Copy summary button */
+.copy-btn{display:inline-flex;align-items:center;gap:4px;padding:3px 11px;border-radius:10px;font-size:11px;font-weight:500;cursor:pointer;border:1px solid rgba(91,156,246,0.35);background:rgba(91,156,246,0.08);color:#5b9cf6;transition:all 0.15s}
+.copy-btn:hover{background:rgba(91,156,246,0.2);color:#2d63b5}
+.copy-btn.copied{background:rgba(39,174,96,0.1);border-color:rgba(39,174,96,0.4);color:#1e8449}
+.alert-body{flex:1;overflow-y:auto;padding:10px 14px;display:flex;flex-direction:column;gap:8px}
 #splash{position:fixed;inset:0;background:#0f1f3a;display:none;flex-direction:column;align-items:center;justify-content:center;z-index:99999;gap:12px}
 #splash h2{color:#fff;font-size:15px;font-weight:600;margin:0}
 #splash p{color:rgba(255,255,255,0.4);font-size:11px;text-align:center;max-width:320px;line-height:1.6;margin:0}
@@ -365,8 +383,8 @@ select:focus,input:focus{border-color:#3a7bd5}
 // ═══════════════════════════════════════════════════════
 // CONFIG
 // ═══════════════════════════════════════════════════════
-const LS_KEY   = 'mcc_motors_v8';
-const META_KEY = 'mcc_meta_v8';
+const LS_KEY   = 'mcc_motors_v9';
+const META_KEY = 'mcc_meta_v9';
 const AUTO_REFRESH_H = 24;
 
 // Sheet structure constants (confirmed from screenshot):
@@ -657,19 +675,21 @@ function parseSheet(csv, src){
     }
 
     const readingCount = Object.keys(readings).length;
-    if(readingCount > 0){
-      result.push({
-        source: src,
-        group:  groupFromTag(tag, mcc, src),
-        tag, description: desc, mcc,
-        rated_current: rated,
-        readings
-      });
-      diag.motors++;
-      diag.readings += readingCount;
-    } else {
-      diag.skipped++;
-    }
+    // Always include the motor — even if it has zero readings.
+    // Motors with no readings are standby/unmeasured units that still
+    // belong in the inventory. They show in the list with "0 days" and
+    // a "No readings recorded" message in the chart area.
+    result.push({
+      source: src,
+      group:  groupFromTag(tag, mcc, src),
+      tag, description: desc, mcc,
+      rated_current: rated,
+      readings,
+      standby: readingCount === 0   // flag for UI to handle gracefully
+    });
+    diag.motors++;
+    diag.readings += readingCount;
+    if(readingCount === 0) diag.skipped++; // count in skipped for diag display
   }
 
   return {motors: result, diag};
@@ -903,7 +923,7 @@ function renderList(){
     const div=document.createElement('div');
     const isCompare=compareMotor&&compareMotor.tag===m.tag&&compareMotor.source===m.source;
     div.className='motor-item'+(i===selectedIdx?' active':isCompare?' compare':'');
-    div.innerHTML='<div class="m-tag"><span class="m-src '+sc(m.source)+'">'+ss(m.source)+'</span>'+m.tag+'</div><div class="m-desc" title="'+m.description+'">'+m.description+'</div><div class="m-meta">'+m.mcc+' · '+Object.keys(m.readings).length+' days</div>';
+    div.innerHTML='<div class="m-tag"><span class="m-src '+sc(m.source)+'">'+ss(m.source)+'</span>'+m.tag+(m.standby?'<span style="font-size:9px;background:#f0f0f0;color:#aaa;border:1px solid #e0e0e0;border-radius:3px;padding:0 4px;margin-left:4px;font-weight:600">STANDBY</span>':'')+'</div><div class="m-desc" title="'+m.description+'">'+m.description+'</div><div class="m-meta">'+m.mcc+' · '+(m.standby?'<span style="color:#bbb">no readings</span>':Object.keys(m.readings).length+' days')+'</div>';
     div.onclick=()=>{
       if(window._comparePicking){
         // Compare pick mode — set this as the compare motor
@@ -996,12 +1016,51 @@ function mergeDates(dates1, dates2){
 }
 
 function showMotor(m){
+  // ── Standby / unmeasured motor ─────────────────────────
+  if(m.standby || Object.keys(m.readings).length === 0){
+    // Clear compare if same motor clicked
+    if(compareMotor && compareMotor.tag===m.tag && compareMotor.source===m.source){
+      compareMotor=null; compareIdx=null;
+    }
+    document.getElementById('mainArea').innerHTML=`
+      <div class="chart-header"><div>
+        <span class="chart-title"><span class="m-src ${sc(m.source)}" style="font-size:9px;padding:1px 5px;border-radius:3px;margin-right:4px">${m.source}</span>${m.tag}</span>
+        <span class="chart-sub"> ${m.description} · MCC: ${m.mcc}</span>
+      </div></div>
+      <div style="flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;padding:30px;text-align:center">
+        <div style="font-size:40px;opacity:0.18">⏸</div>
+        <div style="font-size:15px;font-weight:600;color:#555">No readings recorded</div>
+        <div style="font-size:12px;color:#999;max-width:340px;line-height:1.7">
+          This motor is in the inventory but no current measurements have been entered in the sheet yet.<br>
+          Once an operator records a reading it will appear here automatically.
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:4px">
+          <div style="background:#f4f6fb;border:1px solid #dde3f0;border-radius:7px;padding:8px 18px;font-size:11px;color:#555">
+            <div style="font-size:9px;color:#999;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:2px">Rated current</div>
+            <strong>${m.rated_current ? m.rated_current+'A' : '—'}</strong>
+          </div>
+          <div style="background:#f4f6fb;border:1px solid #dde3f0;border-radius:7px;padding:8px 18px;font-size:11px;color:#555">
+            <div style="font-size:9px;color:#999;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:2px">MCC Location</div>
+            <strong>${m.mcc || '—'}</strong>
+          </div>
+          <div style="background:#f4f6fb;border:1px solid #dde3f0;border-radius:7px;padding:8px 18px;font-size:11px;color:#555">
+            <div style="font-size:9px;color:#999;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:2px">Source</div>
+            <strong>${m.source}</strong>
+          </div>
+        </div>
+      </div>`;
+    return;
+  }
+
+  // ── Normal motor with readings ────────────────────────
   // Clear compare if same motor clicked
   if(compareMotor && compareMotor.tag === m.tag && compareMotor.source === m.source){
     compareMotor = null; compareIdx = null;
   }
 
+  // Build the data series FIRST — this was missing, causing vals to be undefined
   const {dates, vals} = buildSeries(m);
+
   const rated  = m.rated_current || null;
   const oc1    = rated ? +(rated*1.1).toFixed(3) : null;
   const oc2    = rated ? +(rated*1.2).toFixed(3) : null;
@@ -1416,8 +1475,9 @@ function renderAlertPage(){
     grpSel.value = prev;
   }
 
-  // Filter motors by group
-  const filtered = motors.filter(m => !groupFil || m.group === groupFil);
+  // Filter motors by group — exclude standby from OC analysis
+  const filtered = motors.filter(m => (!groupFil || m.group === groupFil) && !m.standby);
+  const standbyCount = motors.filter(m => m.standby).length;
 
   // Compute stats for each motor
   const results = filtered.map((m,i)=>({
@@ -1445,6 +1505,7 @@ function renderAlertPage(){
     `<span class="pill p-r">⚠ ${withOC.length} OC</span>`+
     (showOK ? `<span class="pill p-g">✓ ${noOC.length} OK</span>` : '')+
     `<span class="pill p-gr">— ${unrated.length} unrated</span>`+
+    `<span class="pill p-gr">⏸ ${standbyCount} standby</span>`+
     `<span class="pill p-or">×${mult} · ${rangeLabel}</span>`;
 
   const body = document.getElementById('alertBody');
@@ -1528,19 +1589,28 @@ function renderAlertPage(){
         else if(streak>=2)  streakHTML=`<span class="streak-badge streak-warm">🟡 ${streak} day streak</span>`;
         else if(streak===1) streakHTML=`<span class="streak-badge streak-warm">🟡 1 day</span>`;
 
-        // Severity %
-        const sevStr = rated && latestAvg
-          ? (((latestAvg-rated)/rated)*100).toFixed(1)+'% over rated'
-          : '';
+        // Summary line (always visible, replaces chips-by-default)
+        const firstBreach = breachesInWindow[0] || '';
+        const lastBreach  = breachesInWindow[breachesInWindow.length-1] || '';
+        const summaryHTML = isOC
+          ? `<div class="ar-summary"><strong>${breachesInWindow.length} events</strong> · first <strong>${firstBreach}</strong> · last <strong>${lastBreach}</strong>${severityPct>-Infinity&&severityPct>0?' · <span style="color:#e84040">+'+severityPct.toFixed(1)+'% over limit</span>':''}</div>`
+          : `<div class="ar-summary" style="color:#27ae60">No OC events in selected range</div>`;
 
-        // Breach chips — only in window, max 12 shown
+        // Collapsible date chips — ALL dates, shown/hidden by toggle
+        const uid = m.tag.replace(/[^a-zA-Z0-9]/g,'_')+'_'+i;
         const chipsHTML = isOC
-          ? `<div class="bw">${breachesInWindow.slice(-12).map(d=>`<span class="bc">${d}</span>`).join('')}${breachesInWindow.length>12?`<span class="bc-old">+${breachesInWindow.length-12} more</span>`:''}</div>`
+          ? `<button class="ar-dates-toggle" onclick="toggleDates('${uid}')" id="tog_${uid}">▾ Show all ${breachesInWindow.length} dates</button>`+
+            `<div class="ar-dates-body" id="dates_${uid}">`+
+            breachesInWindow.map(d=>`<span class="bc">${d}</span>`).join('')+
+            `</div>`
           : '';
 
         const row = document.createElement('div');
         row.className = 'ar'+(isOC?'':' no-oc');
         row.innerHTML =
+          // Left accent strip — red for OC, green for OK, grey for unrated
+          `<div class="ar-accent ${isOC?'ar-accent-oc':rated?'ar-accent-ok':'ar-accent-none'}"></div>`+
+          // Main content
           `<div class="arl">`+
             `<div class="art">`+
               `<span class="m-src ${sc(m.source)}" style="font-size:9px;padding:1px 4px;border-radius:3px">${ss(m.source)}</span>`+
@@ -1550,21 +1620,23 @@ function renderAlertPage(){
             `</div>`+
             `<div class="ard">${m.description}</div>`+
             `<div class="arm">MCC: ${m.mcc} · Rated: ${rated||'—'}A · OC limit: ${thr?thr.toFixed(1)+'A':'—'} · ${totalDays} days total</div>`+
-            (latestAvg!==null ?
+            (latestAvg!==null?
               `<div class="ar-reading">`+
                 `<span class="ar-reading-val ${isOver?'over':'ok'}">${latestAvg.toFixed(1)}A</span>`+
                 `<span class="ar-reading-meta">latest (${latestDate||'—'})</span>`+
-                `<div class="ar-bar-wrap"><div class="ar-bar ${isOver?'over':'ok'}" style="width:${barPct}%"></div></div>`+
-                (sevStr?`<span class="ar-reading-meta" style="color:${isOver?'#e84040':'#27ae60'}">${sevStr}</span>`:'')
-              +`</div>`
+                `<div class="ar-bar-wrap"><div class="ar-bar ${isOver?'over':'ok'}" style="width:${Math.min(100,barPct)}%"></div></div>`+
+              `</div>`
             : '')+
+            summaryHTML+
             chipsHTML+
-            (isOC?`<button class="vtb" data-idx="${i}">View trend ↗</button>`:'')+
           `</div>`+
+          // Right column — count + severity + View trend (ALWAYS VISIBLE)
           `<div class="arr">`+
             `<div class="ocn ${isOC?'':'zero'}">${isOC?breachesInWindow.length:'OK'}</div>`+
             `<div class="ocl">${isOC?'OC events':'no events'}</div>`+
-            (isOC && severityPct > -Infinity ? `<div class="sev-pct ${isOC?'':'ok'}">${severityPct>0?'+'+severityPct.toFixed(1)+'%':severityPct.toFixed(1)+'%'}</div>` : '')+
+            (isOC&&severityPct>-Infinity?`<div class="sev-pct">${severityPct>0?'+'+severityPct.toFixed(1)+'%':severityPct.toFixed(1)+'%'}</div>`:'')+
+            (isOC?`<button class="vtb" data-idx="${i}">View trend ↗</button>`:
+                  `<button class="vtb" data-idx="${i}" style="background:#27ae60">View trend ↗</button>`)+
           `</div>`;
 
         ml.appendChild(row);
@@ -1579,13 +1651,26 @@ function renderAlertPage(){
 
   body.addEventListener('click',e=>{
     const b=e.target.closest('.vtb');
-    if(b) goToMotor(parseInt(b.dataset.idx));
+    if(b){ goToMotor(parseInt(b.dataset.idx)); return; }
+    // date toggle handled inline via onclick
   });
 }
 
+// Toggle the collapsible date list for a motor row
+window.toggleDates = function(uid){
+  const tog   = document.getElementById('tog_'+uid);
+  const dates = document.getElementById('dates_'+uid);
+  if(!tog||!dates) return;
+  const open = dates.classList.toggle('open');
+  const count = dates.querySelectorAll('.bc').length;
+  tog.textContent = open
+    ? '▴ Hide dates'
+    : '▾ Show all '+count+' dates';
+};
+
 function updateAlertBadge(){
   const cnt=motors.filter(m=>{
-    if(!m.rated_current)return false;
+    if(m.standby||!m.rated_current)return false;
     const thr=m.rated_current*1.1;
     return Object.values(m.readings).some(s=>{
       const v=Object.values(s).filter(v=>v>0);
